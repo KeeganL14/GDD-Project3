@@ -1,4 +1,4 @@
-#<Insert Game Title Here>
+# [Insert Game Title Here]
 
 ### By Team Jeremy: Brandon Hawke, Keegan Lebeau, Audrey Main, Josh Maldonado, Zachary Sheikh
 
