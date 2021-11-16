@@ -24,7 +24,6 @@ public class MainMenuManger : MonoBehaviour
         MainMenu.SetActive(false);
         CreditsMenu.SetActive(true);
     }
-
     public void MainMenuButton()
     {
         MainMenu.SetActive(true);
@@ -35,6 +34,7 @@ public class MainMenuManger : MonoBehaviour
     {
         Application.Quit();
     }
+
     // Update is called once per frame
     void Update()
     {
