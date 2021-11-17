@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8608371680862080244}
   - component: {fileID: 8142131091032166927}
   - component: {fileID: 7834432083337669047}
-  m_Layer: 0
+  - component: {fileID: 8048331175284483620}
+  m_Layer: 6
   m_Name: PlaceholderProjectile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0}
-  speed: 3
+  speed: 5.5
+  projectileLifetime: 1.25
+  explosion: {fileID: 2515917630055478918, guid: ee229b99dc9bf07419da3299976f3f39,
+    type: 3}
 --- !u!50 &7834432083337669047
 Rigidbody2D:
   serializedVersion: 4
@@ -119,3 +123,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!58 &8048331175284483620
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5888104391076918134}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.495
