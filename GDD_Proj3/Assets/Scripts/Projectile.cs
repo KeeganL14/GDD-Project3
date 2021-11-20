@@ -13,13 +13,9 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
         Destroy(gameObject, projectileLifetime);
 
         //instantiate the particle system at the bullet's location before its destroyed
-
-
     }
 
     // Update is called once per frame
@@ -30,7 +26,6 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         //instantiate the particle system at the bullet's location before its destryoed
         ParticleSystem temp = Instantiate(explosion);
         temp.transform.position = gameObject.transform.position;
@@ -39,5 +34,4 @@ public class Projectile : MonoBehaviour
         //if a bullet collides with something, break it
         Destroy(gameObject, 0.05f);
     }
-
 }
