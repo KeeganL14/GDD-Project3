@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
-    public GameManager gameManager;
+    public GameObject managerObject;
+    GameManager gameManager;
     PlayerMovement characterMovement;
     PlayerCombat characterCombat;
 
@@ -22,6 +23,8 @@ public class PlayerCharacter : MonoBehaviour
         itemEffectTimers = new float[3]; //index of the array corresponds to the int value of the enum
                                          // EX: index 2 corresponds to the timer for the modifyRangedCooldown item effect
         health = maxHealth;
+
+        gameManager = managerObject.GetComponent<GameManager>();
 
         characterCombat = GetComponent<PlayerCombat>();
         characterCombat.rangedCooldown = baseRangedCooldownSpeed;

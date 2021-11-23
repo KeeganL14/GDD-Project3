@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour
     public void ActivatePauseMenu()
     {
         PauseMenu.SetActive(true);
+        // TODO:
+        // - disable player movement and controls
+        // - disable enemy movement
+        // - pause any projectiles, particles, and/or animations
         isPlaying = false;
     }
     public void ResumeGameButton()
