@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
+    public GameObject projectilePrefab;
     public GameObject managerObject;
-    GameManager gameManager;
-    PlayerMovement characterMovement;
-    PlayerCombat characterCombat;
 
-    public float basePlayerSpeed = 45.0f;
-    public float baseRangedCooldownSpeed = 45.0f;
-    public float maxHealth = 50.0f;
-    public float health;
-    uint currentLevel;
+    GameManager gameManager;
+    
+    float x = 0;
+    float y = 0;
+    float speed;
+    float health;
+    float maxHealth = 50.0f;
+    float rangedCooldownTimer;
+    float rangedCooldown = 0.25f;
+    float basePlayerSpeed = 45.0f;
+    float baseRangedCooldownSpeed = 45.0f;
 
     float[] itemEffectTimers;
+
+    uint currentLevel;
 
     // Start is called before the first frame update
     void Start()
@@ -23,18 +29,14 @@ public class PlayerCharacter : MonoBehaviour
         itemEffectTimers = new float[3]; //index of the array corresponds to the int value of the enum
                                          // EX: index 2 corresponds to the timer for the modifyRangedCooldown item effect
         health = maxHealth;
-
+        rangedCooldownTimer = rangedCooldown;
         gameManager = managerObject.GetComponent<GameManager>();
-
-        characterCombat = GetComponent<PlayerCombat>();
-        characterCombat.rangedCooldown = baseRangedCooldownSpeed;
-
-        characterMovement = GetComponent<PlayerMovement>();
-        characterMovement.speed = basePlayerSpeed;
     }
 
     void Update()
     {
+        GameObject bullet;
+
         if (health < 0.0f)
         {
             gameManager.isPlaying = false;
@@ -42,25 +44,91 @@ public class PlayerCharacter : MonoBehaviour
             Start(); //reset values
             return;
         }
-
-        for (int i = 1; i < itemEffectTimers.Length; i++)
+        else //if (gameManager.isPlaying == true)
         {
-            if (itemEffectTimers[i] > 0.0f)
+            #region Movement
+            if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) &&
+                !Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
             {
-                itemEffectTimers[i] -= Time.deltaTime;
+                x = Input.GetAxisRaw("Horizontal");
+                y = Input.GetAxisRaw("Vertical");
             }
-            else // the effect has worn off, reset values to base
+            //normalize the direction so the player doesn't move faster in the diagonal
+            Vector2 direction = new Vector2(x, y).normalized;
+            GetComponent<Rigidbody2D>().velocity = direction * speed;
+            #endregion
+
+            #region Ranged Combat
+            if (rangedCooldownTimer > 0)
             {
-                switch (i)
+                rangedCooldownTimer -= Time.deltaTime;
+            }
+            else if (rangedCooldownTimer < 0)
+            {
+                rangedCooldownTimer = 0;
+            }
+            else if (rangedCooldownTimer == 0)
+            {
+                //shoot bullets in different directions
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-                    case 1: //modifySpeed
-                        characterMovement.speed = basePlayerSpeed;
-                        break;
-                    case 2: //modifyRangedCooldown
-                        characterCombat.rangedCooldown = baseRangedCooldownSpeed;
-                        break;
+                    bullet = Instantiate(projectilePrefab);
+                    bullet.transform.position = transform.position;
+                    bullet.GetComponent<Projectile>().direction = new Vector2(-1, 0);
+                    rangedCooldownTimer = rangedCooldown;
+                }
+                else if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    bullet = Instantiate(projectilePrefab);
+                    bullet.transform.position = transform.position;
+                    bullet.GetComponent<Projectile>().direction = new Vector2(1, 0);
+                    rangedCooldownTimer = rangedCooldown;
+                }
+                else if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    bullet = Instantiate(projectilePrefab);
+                    bullet.transform.position = transform.position;
+                    bullet.GetComponent<Projectile>().direction = new Vector2(0, 1);
+                    rangedCooldownTimer = rangedCooldown;
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    bullet = Instantiate(projectilePrefab);
+                    bullet.transform.position = transform.position;
+                    bullet.GetComponent<Projectile>().direction = new Vector2(0, -1);
+                    rangedCooldownTimer = rangedCooldown;
                 }
             }
+            #endregion
+
+            #region Melee Combat
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //TODO: Implement
+            }
+            #endregion
+
+            #region Item Effects
+            for (int i = 1; i < itemEffectTimers.Length; i++)
+            {
+                if (itemEffectTimers[i] > 0.0f)
+                {
+                    itemEffectTimers[i] -= Time.deltaTime;
+                }
+                else // the effect has worn off, reset values to base
+                {
+                    switch (i)
+                    {
+                        case 1: //modifySpeed
+                            speed = basePlayerSpeed;
+                            break;
+                        case 2: //modifyRangedCooldown
+                            rangedCooldown = baseRangedCooldownSpeed;
+                            break;
+                    }
+                }
+            }
+            #endregion
         }
     }
 
@@ -77,12 +145,12 @@ public class PlayerCharacter : MonoBehaviour
                 break;
 
             case ItemEffect.modifySpeed:
-                characterMovement.speed += item.valueModifier;
+                speed += item.valueModifier;
                 itemEffectTimers[1] = item.effectTime;
                 break;
 
             case ItemEffect.modifyRangedCooldown:
-                characterCombat.rangedCooldown += item.valueModifier;
+                rangedCooldown += item.valueModifier;
                 itemEffectTimers[2] = item.effectTime;
                 break;
         }

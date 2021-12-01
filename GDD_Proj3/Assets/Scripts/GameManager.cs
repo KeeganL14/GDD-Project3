@@ -41,11 +41,13 @@ public class GameManager : MonoBehaviour
         // - disable enemy movement
         // - pause any projectiles, particles, and/or animations
         isPlaying = false;
+        Time.timeScale = 0;
     }
     public void ResumeGameButton()
     {
         PauseMenu.SetActive(false);
         isPlaying = true;
+        Time.timeScale = 1;
     }
     public void QuitToMainMenuButton()
     {
