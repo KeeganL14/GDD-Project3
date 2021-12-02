@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public float chaseSpeed;
     public float followDistance;
     public Transform targetPoint;
+    public float damage = 20f;
 
     protected float health = 25.0f;
 

@@ -8,16 +8,18 @@ public class PlayerCharacter : MonoBehaviour
     public GameObject managerObject;
 
     GameManager gameManager;
-    
+
     float x = 0;
     float y = 0;
     float speed;
     float health;
-    float maxHealth = 50.0f;
+    float defense;
+    float rangedCooldown;
     float rangedCooldownTimer;
-    float rangedCooldown = 0.25f;
+
+    float maxHealth = 50.0f;
     float basePlayerSpeed = 45.0f;
-    float baseRangedCooldownSpeed = 45.0f;
+    float baseRangedCooldownSpeed = 0.35f;
 
     float[] itemEffectTimers;
 
@@ -28,8 +30,11 @@ public class PlayerCharacter : MonoBehaviour
     {
         itemEffectTimers = new float[3]; //index of the array corresponds to the int value of the enum
                                          // EX: index 2 corresponds to the timer for the modifyRangedCooldown item effect
+        defense = 5.0f;
         health = maxHealth;
+        rangedCooldown = baseRangedCooldownSpeed;
         rangedCooldownTimer = rangedCooldown;
+        speed = basePlayerSpeed;
         gameManager = managerObject.GetComponent<GameManager>();
     }
 
@@ -67,34 +72,36 @@ public class PlayerCharacter : MonoBehaviour
             {
                 rangedCooldownTimer = 0;
             }
-            else if (rangedCooldownTimer == 0)
+
+            if (rangedCooldownTimer == 0)
             {
+                float offset = 0.1f;
                 //shoot bullets in different directions
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     bullet = Instantiate(projectilePrefab);
-                    bullet.transform.position = transform.position;
+                    bullet.transform.position = transform.position + new Vector3(-offset, 0, 0);
                     bullet.GetComponent<Projectile>().direction = new Vector2(-1, 0);
                     rangedCooldownTimer = rangedCooldown;
                 }
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     bullet = Instantiate(projectilePrefab);
-                    bullet.transform.position = transform.position;
+                    bullet.transform.position = transform.position + new Vector3(offset, 0, 0);
                     bullet.GetComponent<Projectile>().direction = new Vector2(1, 0);
                     rangedCooldownTimer = rangedCooldown;
                 }
                 else if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     bullet = Instantiate(projectilePrefab);
-                    bullet.transform.position = transform.position;
+                    bullet.transform.position = transform.position + new Vector3(0, offset, 0);
                     bullet.GetComponent<Projectile>().direction = new Vector2(0, 1);
                     rangedCooldownTimer = rangedCooldown;
                 }
                 else if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     bullet = Instantiate(projectilePrefab);
-                    bullet.transform.position = transform.position;
+                    bullet.transform.position = transform.position + new Vector3(0, -offset, 0);
                     bullet.GetComponent<Projectile>().direction = new Vector2(0, -1);
                     rangedCooldownTimer = rangedCooldown;
                 }
@@ -151,6 +158,10 @@ public class PlayerCharacter : MonoBehaviour
 
             case ItemEffect.modifyRangedCooldown:
                 rangedCooldown += item.valueModifier;
+                if (rangedCooldown < 0)
+                {
+                    rangedCooldown = 0;
+                }
                 itemEffectTimers[2] = item.effectTime;
                 break;
         }
@@ -158,14 +169,50 @@ public class PlayerCharacter : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<ConsumableItem>() != null) //check if it is an item
+        if (collision.gameObject.GetComponent<ConsumableItem>() != null || collision.gameObject.tag == "Item") //check if it is an item
         {
             HandleItems(collision.gameObject.GetComponent<ConsumableItem>());
+            Debug.Log("Player collided with an item");
         }
-        else if (collision.gameObject.GetComponent<Enemy>() != null) //check if it is an enemy
+        if (collision.gameObject.GetComponent<Enemy>() != null || collision.gameObject.tag == "Enemy") //check if it is an enemy
         {
+            TakeDamage(20.0f);
+            Debug.Log("Player collided with an enemy");
+        }
+    }
+
+    void TakeDamage(float damage)
+    {
+        damage -= (damage * (defense / 100));
+        health -= damage;
+        Debug.Log(health);
+    }
+
+
+    private void OnGUI()
+    {
+        // for debug purposes!!!
+        GUI.color = Color.white;
+        GUI.skin.box.fontSize = 18;
+
+        GUI.Box(new Rect(0, 10, 100, 30), "Health: " + health);
+        GUI.Box(new Rect(0, 40, 100, 30), "Speed: " + speed);
+        GUI.Box(new Rect(0, 70, 225, 30), "Ranged Cooldown: " + rangedCooldown);
+
+
+        if (itemEffectTimers[1] > 0.0f)
+        {
+            int minutes = Mathf.FloorToInt((itemEffectTimers[1] % 3600) / 60);
+            int seconds = Mathf.FloorToInt(itemEffectTimers[1] % 60);
+            string time = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds);
+            GUI.Box(new Rect(100, 10, 250, 30), "Speed effect: " + time);
+            minutes = Mathf.FloorToInt((itemEffectTimers[2] % 3600) / 60);
+            seconds = Mathf.FloorToInt(itemEffectTimers[2] % 60);
+            time = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds);
+            GUI.Box(new Rect(100, 40, 350, 30), "Ranged cooldown effect: " + time);
 
         }
-        return;
+
+        GUI.skin.box.wordWrap = true;
     }
 }

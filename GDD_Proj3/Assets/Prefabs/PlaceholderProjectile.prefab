@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0}
-  speed: 5.5
+  speed: 8.5
   projectileLifetime: 1.25
   explosion: {fileID: 2515917630055478918, guid: ee229b99dc9bf07419da3299976f3f39,
     type: 3}

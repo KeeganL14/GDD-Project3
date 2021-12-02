@@ -6,8 +6,8 @@ public class Projectile : MonoBehaviour
 {
 
     public Vector2 direction;
-    public float speed;
-    public float projectileLifetime;
+    public float speed = 7.5f;
+    public float projectileLifetime = 1.25f;
     public ParticleSystem explosion;
 
     // Start is called before the first frame update
@@ -25,13 +25,15 @@ public class Projectile : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //instantiate the particle system at the bullet's location before its destryoed
-        ParticleSystem temp = Instantiate(explosion);
-        temp.transform.position = gameObject.transform.position;
-        explosion.Play();
-
-        //if a bullet collides with something, break it
-        Destroy(gameObject, 0.05f);
+    {      
+        //if a bullet collides with something (not the player or a consumable), break it
+        if (collision.gameObject.tag != "Player" && collision.gameObject.tag != "Item")
+        {
+            //instantiate the particle system at the bullet's location before its destroyed
+            ParticleSystem temp = Instantiate(explosion);
+            temp.transform.position = gameObject.transform.position;
+            explosion.Play();
+            Destroy(gameObject, 0.05f);
+        }
     }
 }

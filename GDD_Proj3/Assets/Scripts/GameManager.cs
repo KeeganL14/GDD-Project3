@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject PauseMenu; 
     public bool isPlaying = false;
+    private float playtime = 0.0f;
+    private string timePlayed;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,11 @@ public class GameManager : MonoBehaviour
     {
         if (isPlaying)
         {
-            
+            playtime += Time.deltaTime;
+            int hours = Mathf.FloorToInt(playtime / 3600F);
+            int minutes = Mathf.FloorToInt((playtime % 3600) / 60);
+            int seconds = Mathf.FloorToInt(playtime % 60);
+            timePlayed = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
