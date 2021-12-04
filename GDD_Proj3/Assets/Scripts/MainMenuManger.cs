@@ -18,7 +18,7 @@ public class MainMenuManger : MonoBehaviour
     public void StartButton()
     {
         // initialize game
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("GameLevel");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level 1");
     }
     public void CreditsButton()
     {

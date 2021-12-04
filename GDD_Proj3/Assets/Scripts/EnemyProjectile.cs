@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class EnemyProjectile : MonoBehaviour
 {
     public Vector2 direction;
     public float speed = 7.5f;
     public float projectileLifetime = 1.25f;
+    public float damage;
+
     public ParticleSystem explosion;
+    AudioSource projectileSound;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +18,13 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject, projectileLifetime);
 
         //instantiate the particle system at the bullet's location before its destroyed
+
+        // Play shoot sound
+        projectileSound = GetComponent<AudioSource>();
+        if (projectileSound == null)
+        {
+            Debug.Log("The AudioSource is NULL!");
+        }
     }
 
     // Update is called once per frame
@@ -25,8 +35,8 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if a bullet collides with something (not the player or a consumable), break it
-        if (collision.gameObject.tag != "Player" && collision.gameObject.tag != "Item")
+        //if a bullet collides with something break it
+        if (collision.gameObject.tag != "Enemy")
         {
             //instantiate the particle system at the bullet's location before its destroyed
             ParticleSystem temp = Instantiate(explosion);
@@ -34,5 +44,10 @@ public class Projectile : MonoBehaviour
             explosion.Play();
             Destroy(gameObject, 0.05f);
         }
+    }
+
+    public float GetDamage()
+    {
+        return damage;
     }
 }

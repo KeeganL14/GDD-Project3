@@ -13,10 +13,15 @@ public class ConsumableItem : MonoBehaviour
     public ItemEffect itemType = 0;
     public float valueModifier; // the value to add/subtract/multiply/divide by
     public float effectTime; // how long the effect lasts
+    AudioSource itemPickupSound;
 
-    
     private void Start()
-    {        
+    {
+        itemPickupSound = GetComponent<AudioSource>();
+        if(itemPickupSound == null)
+        {
+            Debug.Log("The AudioSource is NULL!");
+        }
     }
     private void Update()
     {        
@@ -26,7 +31,7 @@ public class ConsumableItem : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerCharacter>() != null || collision.gameObject.tag == "Player") //check if it is an item
         {
-            Debug.Log("Item collided with an player");
+            //Debug.Log("Item collided with an player");
             Destroy(gameObject, 0.05f);
         }
     }

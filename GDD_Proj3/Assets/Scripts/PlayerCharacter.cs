@@ -6,7 +6,6 @@ public class PlayerCharacter : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public GameObject managerObject;
-
     GameManager gameManager;
 
     float x = 0;
@@ -14,12 +13,15 @@ public class PlayerCharacter : MonoBehaviour
     float speed;
     float health;
     float defense;
+    float damage;
     float rangedCooldown;
     float rangedCooldownTimer;
 
     float maxHealth = 50.0f;
+    float baseDamage = 20.0f;
+    float baseDefense = 20.0f;
     float basePlayerSpeed = 45.0f;
-    float baseRangedCooldownSpeed = 0.35f;
+    float baseRangedCooldownSpeed = 0.45f;
 
     float[] itemEffectTimers;
 
@@ -30,26 +32,31 @@ public class PlayerCharacter : MonoBehaviour
     {
         itemEffectTimers = new float[3]; //index of the array corresponds to the int value of the enum
                                          // EX: index 2 corresponds to the timer for the modifyRangedCooldown item effect
-        defense = 5.0f;
+
         health = maxHealth;
+        damage = baseDamage;
+        defense = baseDefense;
+        speed = basePlayerSpeed;
         rangedCooldown = baseRangedCooldownSpeed;
         rangedCooldownTimer = rangedCooldown;
-        speed = basePlayerSpeed;
+
+
         gameManager = managerObject.GetComponent<GameManager>();
+        GetComponent<Transform>().position = new Vector3(0, 0, 0);
     }
 
     void Update()
     {
-        GameObject bullet;
-
         if (health < 0.0f)
         {
-            gameManager.isPlaying = false;
-            currentLevel = 1;
-            Start(); //reset values
-            return;
+            gameManager.ActivateGameOverMenu();
+
+            //gameManager.isPlaying = false;
+            //currentLevel = 1;
+            //Start(); //reset values
+            //return;
         }
-        else //if (gameManager.isPlaying == true)
+        else // if (gameManager.isPlaying == true)
         {
             #region Movement
             if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) &&
@@ -75,35 +82,22 @@ public class PlayerCharacter : MonoBehaviour
 
             if (rangedCooldownTimer == 0)
             {
-                float offset = 0.1f;
                 //shoot bullets in different directions
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                if (Input.GetKey(KeyCode.LeftArrow))
                 {
-                    bullet = Instantiate(projectilePrefab);
-                    bullet.transform.position = transform.position + new Vector3(-offset, 0, 0);
-                    bullet.GetComponent<Projectile>().direction = new Vector2(-1, 0);
-                    rangedCooldownTimer = rangedCooldown;
+                    ShootBullet(new Vector2(-1, 0));
                 }
-                else if (Input.GetKeyDown(KeyCode.RightArrow))
+                else if (Input.GetKey(KeyCode.RightArrow))
                 {
-                    bullet = Instantiate(projectilePrefab);
-                    bullet.transform.position = transform.position + new Vector3(offset, 0, 0);
-                    bullet.GetComponent<Projectile>().direction = new Vector2(1, 0);
-                    rangedCooldownTimer = rangedCooldown;
+                    ShootBullet(new Vector2(1, 0));
                 }
-                else if (Input.GetKeyDown(KeyCode.UpArrow))
+                else if (Input.GetKey(KeyCode.UpArrow))
                 {
-                    bullet = Instantiate(projectilePrefab);
-                    bullet.transform.position = transform.position + new Vector3(0, offset, 0);
-                    bullet.GetComponent<Projectile>().direction = new Vector2(0, 1);
-                    rangedCooldownTimer = rangedCooldown;
+                    ShootBullet(new Vector2(0, 1));
                 }
-                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                else if (Input.GetKey(KeyCode.DownArrow))
                 {
-                    bullet = Instantiate(projectilePrefab);
-                    bullet.transform.position = transform.position + new Vector3(0, -offset, 0);
-                    bullet.GetComponent<Projectile>().direction = new Vector2(0, -1);
-                    rangedCooldownTimer = rangedCooldown;
+                    ShootBullet(new Vector2(0, -1));
                 }
             }
             #endregion
@@ -139,6 +133,17 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
+    private void ShootBullet(Vector2 direction)
+    {
+        Vector3 offset = new Vector3(direction.x, direction.y, 0) / 10f;
+        GameObject bullet;
+        bullet = Instantiate(projectilePrefab);
+        bullet.transform.position = transform.position + offset;
+        bullet.GetComponent<PlayerProjectile>().direction = direction;
+        bullet.GetComponent<PlayerProjectile>().damage = this.damage;
+        rangedCooldownTimer = rangedCooldown;
+    }
+
     private void HandleItems(ConsumableItem item)
     {
         switch (item.itemType)
@@ -172,12 +177,17 @@ public class PlayerCharacter : MonoBehaviour
         if (collision.gameObject.GetComponent<ConsumableItem>() != null || collision.gameObject.tag == "Item") //check if it is an item
         {
             HandleItems(collision.gameObject.GetComponent<ConsumableItem>());
-            Debug.Log("Player collided with an item");
+            //Debug.Log("Player collided with an item");
         }
         if (collision.gameObject.GetComponent<Enemy>() != null || collision.gameObject.tag == "Enemy") //check if it is an enemy
         {
-            TakeDamage(20.0f);
-            Debug.Log("Player collided with an enemy");
+            TakeDamage(collision.gameObject.GetComponent<Enemy>().GetDamage());
+            // Debug.Log("Player collided with an enemy");
+        }
+        if (collision.gameObject.GetComponent<EnemyProjectile>() != null || collision.gameObject.tag == "EnemyProjectile") //check if it is an enemy projectile
+        {
+            TakeDamage(collision.gameObject.GetComponent<EnemyProjectile>().GetDamage());
+            //Debug.Log("Player collided with an enemy projectile");
         }
     }
 
@@ -185,13 +195,16 @@ public class PlayerCharacter : MonoBehaviour
     {
         damage -= (damage * (defense / 100));
         health -= damage;
-        Debug.Log(health);
     }
 
+    public float GetDamage()
+    {
+        return damage;
+    }
 
     private void OnGUI()
     {
-        // for debug purposes!!!
+        // !!!for debug purposes!!!
         GUI.color = Color.white;
         GUI.skin.box.fontSize = 18;
 
@@ -199,19 +212,15 @@ public class PlayerCharacter : MonoBehaviour
         GUI.Box(new Rect(0, 40, 100, 30), "Speed: " + speed);
         GUI.Box(new Rect(0, 70, 225, 30), "Ranged Cooldown: " + rangedCooldown);
 
+        int minutes = Mathf.FloorToInt((itemEffectTimers[1] % 3600) / 60);
+        int seconds = Mathf.FloorToInt(itemEffectTimers[1] % 60);
+        string time = string.Format("{0:00}:{1:00}", minutes, seconds);
+        GUI.Box(new Rect(100, 10, 250, 30), "Speed effect: " + time);
 
-        if (itemEffectTimers[1] > 0.0f)
-        {
-            int minutes = Mathf.FloorToInt((itemEffectTimers[1] % 3600) / 60);
-            int seconds = Mathf.FloorToInt(itemEffectTimers[1] % 60);
-            string time = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds);
-            GUI.Box(new Rect(100, 10, 250, 30), "Speed effect: " + time);
-            minutes = Mathf.FloorToInt((itemEffectTimers[2] % 3600) / 60);
-            seconds = Mathf.FloorToInt(itemEffectTimers[2] % 60);
-            time = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds);
-            GUI.Box(new Rect(100, 40, 350, 30), "Ranged cooldown effect: " + time);
-
-        }
+        minutes = Mathf.FloorToInt((itemEffectTimers[2] % 3600) / 60);
+        seconds = Mathf.FloorToInt(itemEffectTimers[2] % 60);
+        time = string.Format("{0:00}:{1:00}", minutes, seconds);
+        GUI.Box(new Rect(100, 40, 350, 30), "Ranged cooldown effect: " + time);
 
         GUI.skin.box.wordWrap = true;
     }

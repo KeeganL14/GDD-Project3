@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public GameObject projectilePrefab;
+
     public float chaseSpeed;
     public float followDistance;
     public Transform targetPoint;
-    public float damage = 20f;
+    public float damage = 15.0f;
+    public float health = 25.0f;
+    public float defense = 5.0f;
 
-    protected float health = 25.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -34,16 +37,42 @@ public class Enemy : MonoBehaviour
             {
                 //do nothing
             }
-            if (hitObj.collider == null || hitObj.collider.gameObject.tag == "Projectile")
+            if (hitObj.collider == null || hitObj.collider.gameObject.tag == "Player")
             {
+                // follow the player
                 MoveAtConstantSpeed(targetDirection, chaseSpeed);
             }
+        }
+
+        if (health <= 0.0f)
+        {
+            Destroy(gameObject);
         }
     }
 
     void MoveAtConstantSpeed(Vector3 direction, float speed)
     {
         transform.position += (direction.normalized * speed * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<PlayerProjectile>() != null || collision.gameObject.tag == "PlayerProjectile") //check if it is an enemy
+        {
+            TakeDamage(20.0f);
+            //Debug.Log("Enemy collided with an player projectile!");
+        }
+    }
+
+    void TakeDamage(float damage)
+    {
+        damage -= (damage * (defense / 100));
+        health -= damage;
+    }
+
+    public float GetDamage()
+    {
+        return damage;
     }
 
     void LerpToPos(Transform a, Transform b, float speed)
