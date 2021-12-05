@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //if a bullet collides with something (not the player or a consumable), break it
-        if (collision.gameObject.tag != "Player" && collision.gameObject.tag != "Item")
+        if (collision.gameObject.tag != "Item" && collision.gameObject.tag != "Enemy")
         {
             //instantiate the particle system at the bullet's location before its destroyed
             ParticleSystem temp = Instantiate(explosion);

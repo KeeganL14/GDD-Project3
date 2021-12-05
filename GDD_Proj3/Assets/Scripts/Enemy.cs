@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     public GameObject speedItemPrefab;
     public GameObject cooldownItemPrefab;
 
+    public bool canShoot;
+    public float shotTimer = 0.5f;
     public float chaseSpeed = 1.0f;
     public float followDistance = 6.0f;
     public Transform targetPoint;
@@ -19,15 +21,21 @@ public class Enemy : MonoBehaviour
 
     public float itemDropRate = 15.0f; // 15%
 
+    private float timer;
+
     // Start is called before the first frame update
     void Start()
     {
         despawnTime = 0.05f;
+        timer = shotTimer;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        timer -= Time.deltaTime;
+
         //Do the more simple calculation first
         //If the distance between the target and enemy is less than follow distance,
         //check if there's something in the way, and if not, lerp towards the target
@@ -38,24 +46,31 @@ public class Enemy : MonoBehaviour
 
             RaycastHit2D hitObj = Physics2D.Raycast(transform.position, targetDirection);
 
-            if (hitObj.collider != null)
-            {
-                //do nothing
-            }
+            Debug.Log(hitObj.collider.gameObject.tag);
+
             if (hitObj.collider == null
                                 || hitObj.collider.gameObject.tag == "Player"
                                 || hitObj.collider.gameObject.tag == "Item"
-                                || hitObj.collider.gameObject.tag == "Projectile")
+                                || hitObj.collider.gameObject.tag == "Projectile"
+                                || hitObj.collider.gameObject.tag == "Enemy")
             {
                 // follow the player
                 MoveAtConstantSpeed(targetDirection, chaseSpeed);
             }
         }
+
+        if(canShoot && timer <= 0)
+        {
+            timer = shotTimer;
+            ShootBullet(targetPoint.position - transform.position);
+        }
+
     }
 
     void MoveAtConstantSpeed(Vector3 direction, float speed)
     {
-        transform.position += (direction.normalized * speed * Time.deltaTime);
+        GetComponent<Rigidbody2D>().MovePosition(transform.position + direction.normalized * speed * Time.deltaTime);
+        Debug.Log("Moving");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -114,6 +129,17 @@ public class Enemy : MonoBehaviour
     void LerpToPos(Transform a, Transform b, float speed)
     {
         transform.position = Vector2.Lerp(a.position, b.position, speed);
+    }
+
+    private void ShootBullet(Vector2 direction)
+    {
+        direction = direction.normalized;
+        Vector3 offset = new Vector3(direction.x, direction.y, 0) / 10f;
+        GameObject bullet;
+        bullet = Instantiate(projectilePrefab);
+        bullet.transform.position = transform.position + offset;
+        bullet.GetComponent<EnemyProjectile>().direction = direction;
+
     }
 
 }
