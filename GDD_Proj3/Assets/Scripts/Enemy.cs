@@ -12,12 +12,12 @@ public class Enemy : MonoBehaviour
     public float damage = 15.0f;
     public float health = 25.0f;
     public float defense = 5.0f;
-
+    private float despawnTime;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        despawnTime = 0.05f;
     }
 
     // Update is called once per frame
@@ -43,11 +43,6 @@ public class Enemy : MonoBehaviour
                 MoveAtConstantSpeed(targetDirection, chaseSpeed);
             }
         }
-
-        if (health <= 0.0f)
-        {
-            Destroy(gameObject);
-        }
     }
 
     void MoveAtConstantSpeed(Vector3 direction, float speed)
@@ -59,7 +54,14 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerProjectile>() != null || collision.gameObject.tag == "PlayerProjectile") //check if it is an enemy
         {
-            TakeDamage(20.0f);
+            TakeDamage(collision.gameObject.GetComponent<PlayerProjectile>().GetDamage());
+
+            //check if the enemy is dead
+            if(health <= 0)
+            {
+                DestroySelf(despawnTime);
+            }
+
             //Debug.Log("Enemy collided with an player projectile!");
         }
     }
@@ -73,6 +75,11 @@ public class Enemy : MonoBehaviour
     public float GetDamage()
     {
         return damage;
+    }
+
+    public void DestroySelf(float timeUnitlDespawn)
+    {
+        Destroy(gameObject, timeUnitlDespawn);
     }
 
     void LerpToPos(Transform a, Transform b, float speed)
