@@ -385,8 +385,8 @@ GameObject:
   - component: {fileID: 925112524}
   - component: {fileID: 925112522}
   m_Layer: 0
-  m_Name: PlaceholderCharacter
-  m_TagString: Untagged
+  m_Name: f
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -489,10 +489,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d3124aa20bd1d47b27c89d3a6e2647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
   projectilePrefab: {fileID: 5888104391076918134, guid: ba6559e34583e104baeb3b0574dd04af,
     type: 3}
-  timeBetweenShots: 0.25
+  managerObject: {fileID: 0}
 --- !u!1 &1403760896
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +506,7 @@ GameObject:
   - component: {fileID: 1403760897}
   m_Layer: 0
   m_Name: Obs
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -654,9 +653,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7deb00fc6a47e214f99de4e69a3a8e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 0}
   chaseSpeed: 0.5
   followDistance: 4.5
   targetPoint: {fileID: 925112521}
+  damage: 15
+  health: 25
+  defense: 5
 --- !u!212 &1507578807
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -819,7 +822,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 49.540222, y: -0.81677246}
-  m_SizeDelta: {x: 1006.71356, y: 566}
+  m_SizeDelta: {x: 2561.25, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1974374695
 MonoBehaviour:

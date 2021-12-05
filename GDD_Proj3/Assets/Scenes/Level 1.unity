@@ -882,7 +882,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7deb00fc6a47e214f99de4e69a3a8e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 5888104391076918134, guid: ba6559e34583e104baeb3b0574dd04af,
+    type: 3}
   chaseSpeed: 0.7
   followDistance: 4.5
   targetPoint: {fileID: 467767679}
@@ -961,7 +962,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550924879}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1436,7 +1437,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4.55e-13, y: 1.819e-12}
-  m_SizeDelta: {x: 1518.9636, y: 854}
+  m_SizeDelta: {x: 2561.25, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &617270329
 MonoBehaviour:
@@ -3029,7 +3030,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468785075}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -3060,7 +3061,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7deb00fc6a47e214f99de4e69a3a8e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 5888104391076918134, guid: ba6559e34583e104baeb3b0574dd04af,
+    type: 3}
   chaseSpeed: 0.3
   followDistance: 4.5
   targetPoint: {fileID: 467767679}
