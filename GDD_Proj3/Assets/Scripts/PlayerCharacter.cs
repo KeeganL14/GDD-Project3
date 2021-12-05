@@ -20,7 +20,7 @@ public class PlayerCharacter : MonoBehaviour
     float maxHealth = 50.0f;
     float baseDamage = 20.0f;
     float baseDefense = 20.0f;
-    float basePlayerSpeed = 45.0f;
+    float basePlayerSpeed = 50.0f;
     float baseRangedCooldownSpeed = 0.45f;
 
     float[] itemEffectTimers;
@@ -40,7 +40,6 @@ public class PlayerCharacter : MonoBehaviour
         rangedCooldown = baseRangedCooldownSpeed;
         rangedCooldownTimer = rangedCooldown;
 
-
         gameManager = managerObject.GetComponent<GameManager>();
         GetComponent<Transform>().position = new Vector3(0, 0, 0);
     }
@@ -50,13 +49,8 @@ public class PlayerCharacter : MonoBehaviour
         if (health < 0.0f)
         {
             gameManager.ActivateGameOverMenu();
-
-            //gameManager.isPlaying = false;
-            //currentLevel = 1;
-            //Start(); //reset values
-            //return;
         }
-        else // if (gameManager.isPlaying == true)
+        else if (gameManager.isPlaying == true)
         {
             #region Movement
             if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) &&

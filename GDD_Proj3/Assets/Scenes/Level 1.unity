@@ -884,12 +884,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 5888104391076918134, guid: ba6559e34583e104baeb3b0574dd04af,
     type: 3}
-  chaseSpeed: 0.7
-  followDistance: 4.5
+  healthItemPrefab: {fileID: 705477299651061728, guid: ee7ffb1800002ee48afd324ebcfd8e48,
+    type: 3}
+  speedItemPrefab: {fileID: 7447306307232624945, guid: 319ddb9d8f27e664fb1940b234ba4835,
+    type: 3}
+  cooldownItemPrefab: {fileID: 2497977176004423403, guid: c187f8a73d65c9c4393a7096fc506eda,
+    type: 3}
+  chaseSpeed: 1
+  followDistance: 6
   targetPoint: {fileID: 467767679}
   damage: 20
   health: 30
   defense: 10
+  itemDropRate: 10
 --- !u!212 &550924881
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1437,7 +1444,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4.55e-13, y: 1.819e-12}
-  m_SizeDelta: {x: 2561.25, y: 1440}
+  m_SizeDelta: {x: 1165.0131, y: 655}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &617270329
 MonoBehaviour:
@@ -1604,7 +1611,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4.55e-13, y: 1.819e-12}
-  m_SizeDelta: {x: 2561.25, y: 1440}
+  m_SizeDelta: {x: 1165.0131, y: 655}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &717755702
 MonoBehaviour:
@@ -3151,12 +3158,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 5888104391076918134, guid: ba6559e34583e104baeb3b0574dd04af,
     type: 3}
+  healthItemPrefab: {fileID: 705477299651061728, guid: ee7ffb1800002ee48afd324ebcfd8e48,
+    type: 3}
+  speedItemPrefab: {fileID: 7447306307232624945, guid: 319ddb9d8f27e664fb1940b234ba4835,
+    type: 3}
+  cooldownItemPrefab: {fileID: 2497977176004423403, guid: c187f8a73d65c9c4393a7096fc506eda,
+    type: 3}
   chaseSpeed: 0.3
   followDistance: 4.5
   targetPoint: {fileID: 467767679}
   damage: 20
   health: 50
   defense: 25
+  itemDropRate: 10
 --- !u!212 &1468785078
 SpriteRenderer:
   m_ObjectHideFlags: 0

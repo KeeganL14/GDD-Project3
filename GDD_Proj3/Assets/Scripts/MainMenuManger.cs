@@ -7,8 +7,6 @@ public class MainMenuManger : MonoBehaviour
     public GameObject MainMenu;
     public GameObject CreditsMenu;
 
-
-
     // Start is called before the first frame update
     void Start()
     {

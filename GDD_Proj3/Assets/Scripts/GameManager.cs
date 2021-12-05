@@ -16,8 +16,12 @@ public class GameManager : MonoBehaviour
     public GameObject healthItemPrefab;
     public GameObject speedItemPrefab;
     public GameObject cooldownItemPrefab;
+    public GameObject enemyPrefab;
 
     public GameObject player;
+
+    List<GameObject> enemiesInScene;
+    List<GameObject> itemsInScene;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,17 @@ public class GameManager : MonoBehaviour
 
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
+    }
+
+    private void OnGUI()
+    {
+        // !!!for debug purposes!!!
+        GUI.color = Color.white;
+        GUI.skin.box.fontSize = 18;
+
+        GUI.Box(new Rect(0, 100, 100, 30), timePlayed);       
+
+        GUI.skin.box.wordWrap = true;
     }
 
     // Update is called once per frame
@@ -53,10 +68,6 @@ public class GameManager : MonoBehaviour
     public void ActivatePauseMenu()
     {
         pauseMenu.SetActive(true);
-        // TODO:
-        // - disable player movement and controls
-        // - disable enemy movement
-        // - pause any projectiles, particles, and/or animations
         isPlaying = false;
         Time.timeScale = 0;
     }
@@ -82,13 +93,11 @@ public class GameManager : MonoBehaviour
 
     public void QuitToMainMenuButton()
     {
-        //TODO: add an "are you sure?" pop-up
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
     }
 
     public void QuitGameButton()
     {
-        //TODO: add an "are you sure?" pop-up
         Application.Quit();
     }
 }

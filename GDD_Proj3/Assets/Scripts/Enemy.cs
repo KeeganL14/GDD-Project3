@@ -5,14 +5,19 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public GameObject projectilePrefab;
+    public GameObject healthItemPrefab;
+    public GameObject speedItemPrefab;
+    public GameObject cooldownItemPrefab;
 
-    public float chaseSpeed;
-    public float followDistance;
+    public float chaseSpeed = 1.0f;
+    public float followDistance = 6.0f;
     public Transform targetPoint;
     public float damage = 15.0f;
     public float health = 25.0f;
     public float defense = 5.0f;
     private float despawnTime;
+
+    public float itemDropRate = 15.0f; // 15%
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +42,10 @@ public class Enemy : MonoBehaviour
             {
                 //do nothing
             }
-            if (hitObj.collider == null || hitObj.collider.gameObject.tag == "Player")
+            if (hitObj.collider == null
+                                || hitObj.collider.gameObject.tag == "Player"
+                                || hitObj.collider.gameObject.tag == "Item"
+                                || hitObj.collider.gameObject.tag == "Projectile")
             {
                 // follow the player
                 MoveAtConstantSpeed(targetDirection, chaseSpeed);
@@ -52,17 +60,38 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerProjectile>() != null || collision.gameObject.tag == "PlayerProjectile") //check if it is an enemy
+        if (collision.gameObject.GetComponent<PlayerProjectile>() != null || collision.gameObject.tag == "PlayerProjectile")
         {
             TakeDamage(collision.gameObject.GetComponent<PlayerProjectile>().GetDamage());
 
             //check if the enemy is dead
-            if(health <= 0)
+            if (health <= 0)
             {
-                DestroySelf(despawnTime);
-            }
+                if (Random.Range(0, 100) < itemDropRate)
+                {
+                    GameObject item;
+                    switch (Random.Range(1, 4))
+                    {
+                        case 1:
+                            item = Instantiate(healthItemPrefab);
+                            item.transform.position = this.transform.position;
+                            break;
+                        case 2:
+                            item = Instantiate(speedItemPrefab);
+                            item.transform.position = this.transform.position;
+                            break;
+                        case 3:
+                            item = Instantiate(cooldownItemPrefab);
+                            item.transform.position = this.transform.position;
+                            break;
 
-            //Debug.Log("Enemy collided with an player projectile!");
+                    }                    
+                }
+
+                DestroySelf(despawnTime);
+
+                //Debug.Log("Enemy collided with an player projectile!");
+            }
         }
     }
 
