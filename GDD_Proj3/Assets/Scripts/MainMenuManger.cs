@@ -13,6 +13,11 @@ public class MainMenuManger : MonoBehaviour
         MainMenuButton();
     }
 
+    public void Tutorial()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Onboarding");
+    }
+
     public void StartButton()
     {
         // initialize game

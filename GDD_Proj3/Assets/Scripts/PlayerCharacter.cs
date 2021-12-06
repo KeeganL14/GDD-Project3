@@ -48,6 +48,10 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (health < 0.0f)
         {
+            //set the animator to show the death animation
+            //this doesnt work because the character game object is being disabled somewhere in the code
+            //GetComponent<Animator>().SetBool("isDead", true);
+
             gameManager.ActivateGameOverMenu();
         }
         else if (gameManager.isPlaying == true)
@@ -59,6 +63,18 @@ public class PlayerCharacter : MonoBehaviour
                 x = Input.GetAxisRaw("Horizontal");
                 y = Input.GetAxisRaw("Vertical");
             }
+
+            if(Mathf.Abs(x) + Mathf.Abs(y) > 0.005f)
+            {
+                //set the animator to show the walking animation
+                GetComponent<Animator>().SetBool("isMoving", true);
+            }
+            else
+            {
+                //set the animator to show the idle animation
+                GetComponent<Animator>().SetBool("isMoving", false);
+            }
+
             //normalize the direction so the player doesn't move faster in the diagonal
             Vector2 direction = new Vector2(x, y).normalized;
             GetComponent<Rigidbody2D>().velocity = direction * speed;

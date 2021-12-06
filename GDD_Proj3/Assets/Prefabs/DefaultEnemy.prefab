@@ -107,7 +107,7 @@ MonoBehaviour:
     type: 3}
   canShoot: 0
   shotTimer: 0.5
-  chaseSpeed: 20
+  chaseSpeed: 15
   followDistance: 6
   targetPoint: {fileID: 0}
   damage: 20
