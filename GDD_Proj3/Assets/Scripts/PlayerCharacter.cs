@@ -27,6 +27,8 @@ public class PlayerCharacter : MonoBehaviour
 
     uint currentLevel;
 
+    public AudioSource project;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -152,6 +154,9 @@ public class PlayerCharacter : MonoBehaviour
         bullet.GetComponent<PlayerProjectile>().direction = direction;
         bullet.GetComponent<PlayerProjectile>().damage = this.damage;
         rangedCooldownTimer = rangedCooldown;
+
+        //play audio
+        project.Play();
     }
 
     private void HandleItems(ConsumableItem item)
