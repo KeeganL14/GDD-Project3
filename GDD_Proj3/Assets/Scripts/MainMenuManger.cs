@@ -7,18 +7,21 @@ public class MainMenuManger : MonoBehaviour
     public GameObject MainMenu;
     public GameObject CreditsMenu;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
         MainMenuButton();
     }
 
+    public void Tutorial()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Onboarding");
+    }
+
     public void StartButton()
     {
         // initialize game
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("GameLevel");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level 1");
     }
     public void CreditsButton()
     {
