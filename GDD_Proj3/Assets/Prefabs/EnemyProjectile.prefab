@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4783418181719506105}
   - component: {fileID: -2129211928701812050}
   m_Layer: 0
-  m_Name: Placeholder_EnemyProjectile
+  m_Name: EnemyProjectile
   m_TagString: EnemyProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3510022260267972683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1015256, y: 0.1015256, z: 0.1015256}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0}
-  speed: 3
+  speed: 5
   projectileLifetime: 1.25
   damage: 15
   explosion: {fileID: 2515917630055478918, guid: ee229b99dc9bf07419da3299976f3f39,
@@ -153,7 +153,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4317d2bcfd2bd0d4db87897a7f9e0a4c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0

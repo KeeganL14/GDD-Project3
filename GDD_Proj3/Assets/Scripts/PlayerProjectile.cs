@@ -18,13 +18,6 @@ public class PlayerProjectile : MonoBehaviour
         Destroy(gameObject, projectileLifetime);
 
         //instantiate the particle system at the bullet's location before its destroyed
-
-        // Play shoot sound
-        projectileSound = GetComponent<AudioSource>();
-        if (projectileSound == null)
-        {
-            Debug.Log("The AudioSource is NULL!");
-        }
     }
 
     // Update is called once per frame

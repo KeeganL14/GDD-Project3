@@ -4,9 +4,11 @@ using UnityEngine;
 
 public enum ItemEffect
 {
-    restoreHealth, //0
-    modifySpeed, //1
-    modifyRangedCooldown //2
+    restoreHealth, //0 add/subtract
+    modifySpeed, //1 add/subtract
+    modifyRangedCooldown, //2 add/subtract
+    modifyDefense, //3 add/subtract
+    ModifyDamage //4 multiplier
 }
 public class ConsumableItem : MonoBehaviour
 {
@@ -30,7 +32,7 @@ public class ConsumableItem : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerCharacter>() != null || collision.gameObject.tag == "Player") // check if it is an item
+        if (collision.gameObject.tag == "Player") // check if it picked up by the player
         {
             //play sound 
             itemPickupSound.Play();

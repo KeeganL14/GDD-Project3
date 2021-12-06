@@ -6,7 +6,7 @@ public class EnemyProjectile : MonoBehaviour
 {
     public Vector2 direction;
     public float speed = 7.5f;
-    public float projectileLifetime = 1.25f;
+    public float projectileLifetime = 2.25f;
     public float damage;
 
     public ParticleSystem explosion;
@@ -18,13 +18,6 @@ public class EnemyProjectile : MonoBehaviour
         Destroy(gameObject, projectileLifetime);
 
         //instantiate the particle system at the bullet's location before its destroyed
-
-        // Play shoot sound
-        projectileSound = GetComponent<AudioSource>();
-        if (projectileSound == null)
-        {
-            Debug.Log("The AudioSource is NULL!");
-        }
     }
 
     // Update is called once per frame

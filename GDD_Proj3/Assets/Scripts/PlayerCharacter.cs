@@ -8,6 +8,8 @@ public class PlayerCharacter : MonoBehaviour
     public GameObject managerObject;
     GameManager gameManager;
 
+    public Vector3 startPosition;
+
     float x = 0;
     float y = 0;
     float speed;
@@ -19,7 +21,7 @@ public class PlayerCharacter : MonoBehaviour
 
     float maxHealth = 100.0f;
     float baseDamage = 20.0f;
-    float baseDefense = 20.0f;
+    float baseDefense = 30.0f;
     float basePlayerSpeed = 70.0f;
     float baseRangedCooldownSpeed = 0.45f;
 
@@ -27,12 +29,12 @@ public class PlayerCharacter : MonoBehaviour
 
     uint currentLevel;
 
-    public AudioSource project;
+    public AudioSource shootSound;
 
     // Start is called before the first frame update
     void Start()
     {
-        itemEffectTimers = new float[3]; //index of the array corresponds to the int value of the enum
+        itemEffectTimers = new float[5]; //index of the array corresponds to the int value of the enum
                                          // EX: index 2 corresponds to the timer for the modifyRangedCooldown item effect
 
         health = maxHealth;
@@ -43,7 +45,7 @@ public class PlayerCharacter : MonoBehaviour
         rangedCooldownTimer = rangedCooldown;
 
         gameManager = managerObject.GetComponent<GameManager>();
-        GetComponent<Transform>().position = new Vector3(0, 0, 0);
+        GetComponent<Transform>().position = startPosition;
     }
 
     void Update()
@@ -66,7 +68,7 @@ public class PlayerCharacter : MonoBehaviour
                 y = Input.GetAxisRaw("Vertical");
             }
 
-            if(Mathf.Abs(x) + Mathf.Abs(y) > 0.005f)
+            if (Mathf.Abs(x) + Mathf.Abs(y) > 0.005f)
             {
                 //set the animator to show the walking animation
                 GetComponent<Animator>().SetBool("isMoving", true);
@@ -138,6 +140,12 @@ public class PlayerCharacter : MonoBehaviour
                         case 2: //modifyRangedCooldown
                             rangedCooldown = baseRangedCooldownSpeed;
                             break;
+                        case 3: //modifyDefense
+                            defense = baseDefense;
+                            break;
+                        case 4: //modifyDamage
+                            damage = baseDamage;
+                            break;
                     }
                 }
             }
@@ -156,7 +164,7 @@ public class PlayerCharacter : MonoBehaviour
         rangedCooldownTimer = rangedCooldown;
 
         //play audio
-        project.Play();
+        shootSound.Play();
     }
 
     private void HandleItems(ConsumableItem item)
@@ -173,6 +181,10 @@ public class PlayerCharacter : MonoBehaviour
 
             case ItemEffect.modifySpeed:
                 speed += item.valueModifier;
+                if (speed < 1)
+                {
+                    speed = 1;
+                }
                 itemEffectTimers[1] = item.effectTime;
                 break;
 
@@ -183,6 +195,20 @@ public class PlayerCharacter : MonoBehaviour
                     rangedCooldown = 0;
                 }
                 itemEffectTimers[2] = item.effectTime;
+                break;
+
+            case ItemEffect.modifyDefense:
+                defense += item.valueModifier;
+                if (defense < 0)
+                {
+                    defense = 0;
+                }
+                itemEffectTimers[3] = item.effectTime;
+                break;
+
+            case ItemEffect.ModifyDamage:
+                damage *= item.valueModifier;
+                itemEffectTimers[4] = item.effectTime;
                 break;
         }
     }
@@ -221,21 +247,11 @@ public class PlayerCharacter : MonoBehaviour
     {
         // !!!for debug purposes!!!
         GUI.color = Color.white;
-        GUI.skin.box.fontSize = 18;
+        GUI.skin.box.fontSize = 25;
 
-        GUI.Box(new Rect(0, 10, 100, 30), "Health: " + health);
-        GUI.Box(new Rect(0, 40, 100, 30), "Speed: " + speed);
-        GUI.Box(new Rect(0, 70, 225, 30), "Ranged Cooldown: " + rangedCooldown);
-
-        int minutes = Mathf.FloorToInt((itemEffectTimers[1] % 3600) / 60);
-        int seconds = Mathf.FloorToInt(itemEffectTimers[1] % 60);
-        string time = string.Format("{0:00}:{1:00}", minutes, seconds);
-        GUI.Box(new Rect(100, 10, 250, 30), "Speed effect: " + time);
-
-        minutes = Mathf.FloorToInt((itemEffectTimers[2] % 3600) / 60);
-        seconds = Mathf.FloorToInt(itemEffectTimers[2] % 60);
-        time = string.Format("{0:00}:{1:00}", minutes, seconds);
-        GUI.Box(new Rect(100, 40, 350, 30), "Ranged cooldown effect: " + time);
+        GUI.Box(new Rect(0, 0, 300, 50), "Health: " + health);
+        GUI.Box(new Rect(0, 50, 300, 50), "Speed: " + speed);
+        GUI.Box(new Rect(0, 100, 300, 50), "Shoot Speed: " + rangedCooldown);
 
         GUI.skin.box.wordWrap = true;
     }

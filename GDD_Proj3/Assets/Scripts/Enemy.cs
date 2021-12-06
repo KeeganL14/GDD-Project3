@@ -9,27 +9,28 @@ public class Enemy : MonoBehaviour
     public GameObject speedItemPrefab;
     public GameObject cooldownItemPrefab;
 
-    public bool canShoot;
+    public bool canShoot = false;
+
     public float shootCooldown = 0.75f;
-    public float chaseSpeed = 10.0f;
+    public float chaseSpeed = 5.0f;
     public float followDistance = 6.0f;
-    public float damage = 15.0f;
-    public float health = 25.0f;
+    public float damage = 10.0f;
+    public float health = 30.0f;
     public float defense = 5.0f;
-    public float itemDropRate = 15.0f; // 15%
+    public float itemDropRate = 5.0f; // 15%
+
     public Transform targetPoint;
 
     private float despawnTime;
     private float timer;
 
-    AudioSource fireball;
+    public AudioSource fireball;
 
     // Start is called before the first frame update
     void Start()
     {
         despawnTime = 0.05f;
         timer = shootCooldown;
-        fireball = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -37,29 +38,6 @@ public class Enemy : MonoBehaviour
     {
 
         timer -= Time.deltaTime;
-
-        //Do the more simple calculation first
-        //If the distance between the target and enemy is less than follow distance,
-        //check if there's something in the way, and if not, lerp towards the target
-        if (Vector2.Distance(transform.position, targetPoint.position) < followDistance)
-        {
-            //find the vector between the target and the enemy
-            Vector3 targetDirection = targetPoint.position - transform.position;
-
-            RaycastHit2D hitObj = Physics2D.Raycast(transform.position, targetDirection);
-
-            //Debug.Log(hitObj.collider.gameObject.tag);
-
-            if (hitObj.collider == null
-                                || hitObj.collider.gameObject.tag == "Player"
-                                || hitObj.collider.gameObject.tag == "Item"
-                                || hitObj.collider.gameObject.tag == "Projectile"
-                                || hitObj.collider.gameObject.tag == "Enemy")
-            {
-                // follow the player
-                MoveAtConstantSpeed(targetDirection, chaseSpeed);
-            }
-        }
 
         //check if the enemy is dead
         if (health <= 0)
@@ -85,16 +63,39 @@ public class Enemy : MonoBehaviour
             }
             gameObject.SetActive(false);
         }
-
-        if (canShoot && timer <= 0)
+        else
         {
-            timer = shootCooldown;
-            ShootBullet(targetPoint.position - transform.position);
+            //Do the more simple calculation first
+            //If the distance between the target and enemy is less than follow distance,
+            //check if there's something in the way, and if not, lerp towards the target
+            if (Vector2.Distance(transform.position, targetPoint.position) < followDistance)
+            {
+                //find the vector between the target and the enemy
+                Vector3 targetDirection = targetPoint.position - transform.position;
 
-            //play audio 
-            fireball.Play();
+                RaycastHit2D hitObj = Physics2D.Raycast(transform.position, targetDirection);
+
+                //Debug.Log(hitObj.collider.gameObject.tag);
+
+                if (hitObj.collider == null
+                                    || hitObj.collider.gameObject.tag == "Player"
+                                    || hitObj.collider.gameObject.tag == "Item"
+                                    || hitObj.collider.gameObject.tag == "Projectile"
+                                    || hitObj.collider.gameObject.tag == "Enemy")
+                {
+                    // follow the player
+                    MoveAtConstantSpeed(targetDirection, chaseSpeed);
+                    if (canShoot && timer <= 0)
+                    {
+                        timer = shootCooldown;
+                        ShootBullet(targetPoint.position - transform.position);
+
+                        //play audio 
+                        fireball.Play();
+                    }
+                }
+            }
         }
-
     }
 
     void MoveAtConstantSpeed(Vector3 direction, float speed)
@@ -133,7 +134,7 @@ public class Enemy : MonoBehaviour
     }
 
     private void ShootBullet(Vector2 direction)
-    {        
+    {
         direction = direction.normalized;
         Vector3 offset = new Vector3(direction.x, direction.y, 0) / 10f;
         GameObject bullet;
