@@ -22,13 +22,14 @@ public class Enemy : MonoBehaviour
     private float despawnTime;
     private float timer;
 
-    public AudioSource fireball;
+    AudioSource fireball;
 
     // Start is called before the first frame update
     void Start()
     {
         despawnTime = 0.05f;
         timer = shootCooldown;
+        fireball = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -89,6 +90,9 @@ public class Enemy : MonoBehaviour
         {
             timer = shootCooldown;
             ShootBullet(targetPoint.position - transform.position);
+
+            //play audio 
+            fireball.Play();
         }
 
     }
@@ -129,10 +133,7 @@ public class Enemy : MonoBehaviour
     }
 
     private void ShootBullet(Vector2 direction)
-    {
-        //play audio 
-        fireball.Play();
-
+    {        
         direction = direction.normalized;
         Vector3 offset = new Vector3(direction.x, direction.y, 0) / 10f;
         GameObject bullet;
