@@ -58,6 +58,31 @@ public class Enemy : MonoBehaviour
             }
         }
 
+        //check if the enemy is dead
+        if (health <= 0)
+        {
+            if (Random.Range(0, 100) < itemDropRate)
+            {
+                GameObject item;
+                switch (Random.Range(1, 4))
+                {
+                    case 1:
+                        item = Instantiate(healthItemPrefab);
+                        item.transform.position = this.transform.position;
+                        break;
+                    case 2:
+                        item = Instantiate(speedItemPrefab);
+                        item.transform.position = this.transform.position;
+                        break;
+                    case 3:
+                        item = Instantiate(cooldownItemPrefab);
+                        item.transform.position = this.transform.position;
+                        break;
+                }
+            }
+            gameObject.SetActive(false);
+        }
+
         if (canShoot && timer <= 0)
         {
             timer = shootCooldown;
@@ -77,31 +102,6 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.GetComponent<PlayerProjectile>() != null || collision.gameObject.tag == "PlayerProjectile")
         {
             TakeDamage(collision.gameObject.GetComponent<PlayerProjectile>().GetDamage());
-
-            //check if the enemy is dead
-            if (health <= 0)
-            {
-                if (Random.Range(0, 100) < itemDropRate)
-                {
-                    GameObject item;
-                    switch (Random.Range(1, 4))
-                    {
-                        case 1:
-                            item = Instantiate(healthItemPrefab);
-                            item.transform.position = this.transform.position;
-                            break;
-                        case 2:
-                            item = Instantiate(speedItemPrefab);
-                            item.transform.position = this.transform.position;
-                            break;
-                        case 3:
-                            item = Instantiate(cooldownItemPrefab);
-                            item.transform.position = this.transform.position;
-                            break;
-                    }
-                }
-                DestroySelf(despawnTime);
-            }
         }
     }
 

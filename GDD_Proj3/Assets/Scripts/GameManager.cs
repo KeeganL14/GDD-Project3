@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         //instantiate enemies
         GameObject enemy = Instantiate(enemyPrefab);
         Enemy enemyScript = enemy.GetComponent<Enemy>();
-        enemy.transform.position = new Vector3(0.0f, 0.0f, 0.0f);        
+        enemy.transform.position = new Vector3(-4.45f, -2.77f, 0.0f);        
         enemyScript.canShoot = false;
         enemyScript.shootCooldown = 0.75f;
         enemyScript.chaseSpeed = 10.0f;        
@@ -45,35 +45,35 @@ public class GameManager : MonoBehaviour
         enemyScript.damage = 15.0f;
         enemyScript.health = 25.0f;
         enemyScript.defense = 5.0f;
-        enemyScript.itemDropRate = 15.0f;
+        enemyScript.itemDropRate = 8.0f;
         enemyScript.targetPoint = player.transform;
         enemiesInScene.Add(enemy);
 
         enemy = Instantiate(enemyPrefab);
         enemyScript = enemy.GetComponent<Enemy>();
-        enemy.transform.position = new Vector3(0.0f, 0.0f, 0.0f);        
-        enemyScript.canShoot = false;
-        enemyScript.shootCooldown = 0.75f;
+        enemy.transform.position = new Vector3(5.93f, 3.24f, 0.0f);        
+        enemyScript.canShoot = true;
+        enemyScript.shootCooldown = 1.75f;
         enemyScript.chaseSpeed = 10.0f;
-        enemyScript.followDistance = 6.0f;
-        enemyScript.damage = 15.0f;
-        enemyScript.health = 25.0f;
-        enemyScript.defense = 5.0f;
-        enemyScript.itemDropRate = 15.0f;
+        enemyScript.followDistance = 8.0f;
+        enemyScript.damage = 10.0f;
+        enemyScript.health = 35.0f;
+        enemyScript.defense = 12.0f;
+        enemyScript.itemDropRate = 5.0f;
         enemyScript.targetPoint = player.transform;
         enemiesInScene.Add(enemy);
 
         enemy = Instantiate(enemyPrefab);
         enemyScript = enemy.GetComponent<Enemy>();
-        enemy.transform.position = new Vector3(0.0f, 0.0f, 0.0f);        
-        enemyScript.canShoot = false;
+        enemy.transform.position = new Vector3(6.86f, -3.28f, 0.0f);        
+        enemyScript.canShoot = true;
         enemyScript.shootCooldown = 0.75f;
-        enemyScript.chaseSpeed = 10.0f;
+        enemyScript.chaseSpeed = 5.5f;
         enemyScript.followDistance = 6.0f;
-        enemyScript.damage = 15.0f;
-        enemyScript.health = 25.0f;
-        enemyScript.defense = 5.0f;
-        enemyScript.itemDropRate = 15.0f;
+        enemyScript.damage = 25.0f;
+        enemyScript.health = 50.0f;
+        enemyScript.defense = 10.0f;
+        enemyScript.itemDropRate = 10.0f;
         enemyScript.targetPoint = player.transform;
         enemiesInScene.Add(enemy);
 
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
             numberOfEnemiesLeft = enemiesInScene.Count;
             foreach (GameObject enemy in enemiesInScene)
             {
-                if (enemy == null)
+                if (enemy.activeInHierarchy != true)
                 {
                     numberOfEnemiesLeft--;
                 }
