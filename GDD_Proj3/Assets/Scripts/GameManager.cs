@@ -5,12 +5,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-
+    
     public bool isPlaying = false;
     private float playtime = 0.0f;
     private string timePlayed;
 
-    public GameObject winMenu;
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
 
@@ -21,8 +20,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
 
-    public List<GameObject> enemiesInScene;
-    public int numberOfEnemiesLeft;
+    List<GameObject> enemiesInScene;
     List<GameObject> itemsInScene;
 
     // Start is called before the first frame update
@@ -30,54 +28,8 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
 
-        winMenu.SetActive(false);
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
-
-        //instantiate enemies
-        GameObject enemy = Instantiate(enemyPrefab);
-        Enemy enemyScript = enemy.GetComponent<Enemy>();
-        enemy.transform.position = new Vector3(0.0f, 0.0f, 0.0f);        
-        enemyScript.canShoot = false;
-        enemyScript.shootCooldown = 0.75f;
-        enemyScript.chaseSpeed = 10.0f;        
-        enemyScript.followDistance = 6.0f;
-        enemyScript.damage = 15.0f;
-        enemyScript.health = 25.0f;
-        enemyScript.defense = 5.0f;
-        enemyScript.itemDropRate = 15.0f;
-        enemyScript.targetPoint = player.transform;
-        enemiesInScene.Add(enemy);
-
-        enemy = Instantiate(enemyPrefab);
-        enemyScript = enemy.GetComponent<Enemy>();
-        enemy.transform.position = new Vector3(0.0f, 0.0f, 0.0f);        
-        enemyScript.canShoot = false;
-        enemyScript.shootCooldown = 0.75f;
-        enemyScript.chaseSpeed = 10.0f;
-        enemyScript.followDistance = 6.0f;
-        enemyScript.damage = 15.0f;
-        enemyScript.health = 25.0f;
-        enemyScript.defense = 5.0f;
-        enemyScript.itemDropRate = 15.0f;
-        enemyScript.targetPoint = player.transform;
-        enemiesInScene.Add(enemy);
-
-        enemy = Instantiate(enemyPrefab);
-        enemyScript = enemy.GetComponent<Enemy>();
-        enemy.transform.position = new Vector3(0.0f, 0.0f, 0.0f);        
-        enemyScript.canShoot = false;
-        enemyScript.shootCooldown = 0.75f;
-        enemyScript.chaseSpeed = 10.0f;
-        enemyScript.followDistance = 6.0f;
-        enemyScript.damage = 15.0f;
-        enemyScript.health = 25.0f;
-        enemyScript.defense = 5.0f;
-        enemyScript.itemDropRate = 15.0f;
-        enemyScript.targetPoint = player.transform;
-        enemiesInScene.Add(enemy);
-
-        numberOfEnemiesLeft = enemiesInScene.Count;
     }
 
     private void OnGUI()
@@ -86,8 +38,7 @@ public class GameManager : MonoBehaviour
         GUI.color = Color.white;
         GUI.skin.box.fontSize = 18;
 
-        if (isPlaying)
-            GUI.Box(new Rect(0, 100, 100, 30), timePlayed);
+        GUI.Box(new Rect(0, 100, 100, 30), timePlayed);       
 
         GUI.skin.box.wordWrap = true;
     }
@@ -102,26 +53,10 @@ public class GameManager : MonoBehaviour
             int minutes = Mathf.FloorToInt((playtime % 3600) / 60);
             int seconds = Mathf.FloorToInt(playtime % 60);
             timePlayed = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
-
-            numberOfEnemiesLeft = enemiesInScene.Count;
-            foreach (GameObject enemy in enemiesInScene)
-            {
-                if (enemy == null)
-                {
-                    numberOfEnemiesLeft--;
-                }
-            }
-            if (numberOfEnemiesLeft <= 0)
-            {
-                isPlaying = false;
-                ActivateWinMenu();
-            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)
-                    && !winMenu.activeInHierarchy
-                    && !gameOverMenu.activeInHierarchy)
-        {
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameOverMenu.activeInHierarchy)
+        { 
             isPlaying = !isPlaying; // toggle pause menu
             if (isPlaying == false)
                 ActivatePauseMenu();
@@ -130,42 +65,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ActivateWinMenu()
-    {
-        winMenu.SetActive(true);
-        player.gameObject.SetActive(false);
-        isPlaying = false;
-    }
-
     public void ActivatePauseMenu()
     {
         pauseMenu.SetActive(true);
-        player.gameObject.SetActive(false);
         isPlaying = false;
         Time.timeScale = 0;
     }
 
-    public void ActivateGameOverMenu()
-    {
-        gameOverMenu.SetActive(true);
-        player.gameObject.SetActive(false);
-        isPlaying = false;
-    }
-
     public void ResumeGameButton()
     {
+        pauseMenu.SetActive(false);
         isPlaying = true;
         Time.timeScale = 1;
-        winMenu.SetActive(false);
-        pauseMenu.SetActive(false);
-        gameOverMenu.SetActive(false);
-        player.gameObject.SetActive(true);
+    }
+
+    public void ActivateGameOverMenu()
+    {
+        isPlaying = false;
+        player.gameObject.SetActive(false);
+        gameOverMenu.SetActive(true);
     }
 
     public void TryAgainButton()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Level 1"); // reset scene
-        ResumeGameButton();
     }
 
     public void QuitToMainMenuButton()
