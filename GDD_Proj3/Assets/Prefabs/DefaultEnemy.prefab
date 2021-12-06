@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7deb00fc6a47e214f99de4e69a3a8e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 3510022260267972683, guid: 6e9ba9136e273c342bc8a2434e89c27f,
+  projectilePrefab: {fileID: 5888104391076918134, guid: ba6559e34583e104baeb3b0574dd04af,
     type: 3}
   healthItemPrefab: {fileID: 705477299651061728, guid: ee7ffb1800002ee48afd324ebcfd8e48,
     type: 3}
@@ -106,14 +106,14 @@ MonoBehaviour:
   cooldownItemPrefab: {fileID: 2497977176004423403, guid: c187f8a73d65c9c4393a7096fc506eda,
     type: 3}
   canShoot: 0
-  shootCooldown: 0.75
+  shotTimer: 0.5
   chaseSpeed: 15
   followDistance: 6
+  targetPoint: {fileID: 0}
   damage: 20
   health: 30
   defense: 10
   itemDropRate: 10
-  targetPoint: {fileID: 0}
 --- !u!61 &1367286631252149008
 BoxCollider2D:
   m_ObjectHideFlags: 0
