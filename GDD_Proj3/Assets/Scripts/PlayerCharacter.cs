@@ -17,10 +17,10 @@ public class PlayerCharacter : MonoBehaviour
     float rangedCooldown;
     float rangedCooldownTimer;
 
-    float maxHealth = 50.0f;
+    float maxHealth = 100.0f;
     float baseDamage = 20.0f;
     float baseDefense = 20.0f;
-    float basePlayerSpeed = 50.0f;
+    float basePlayerSpeed = 70.0f;
     float baseRangedCooldownSpeed = 0.45f;
 
     float[] itemEffectTimers;

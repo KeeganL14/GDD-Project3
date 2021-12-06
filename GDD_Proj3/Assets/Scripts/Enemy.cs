@@ -10,24 +10,23 @@ public class Enemy : MonoBehaviour
     public GameObject cooldownItemPrefab;
 
     public bool canShoot;
-    public float shotTimer = 0.5f;
-    public float chaseSpeed = 1.0f;
+    public float shootCooldown = 0.75f;
+    public float chaseSpeed = 10.0f;
     public float followDistance = 6.0f;
-    public Transform targetPoint;
     public float damage = 15.0f;
     public float health = 25.0f;
     public float defense = 5.0f;
-    private float despawnTime;
-
     public float itemDropRate = 15.0f; // 15%
+    public Transform targetPoint;
 
+    private float despawnTime;
     private float timer;
 
     // Start is called before the first frame update
     void Start()
     {
         despawnTime = 0.05f;
-        timer = shotTimer;
+        timer = shootCooldown;
     }
 
     // Update is called once per frame
@@ -46,7 +45,7 @@ public class Enemy : MonoBehaviour
 
             RaycastHit2D hitObj = Physics2D.Raycast(transform.position, targetDirection);
 
-            Debug.Log(hitObj.collider.gameObject.tag);
+            //Debug.Log(hitObj.collider.gameObject.tag);
 
             if (hitObj.collider == null
                                 || hitObj.collider.gameObject.tag == "Player"
@@ -59,9 +58,9 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if(canShoot && timer <= 0)
+        if (canShoot && timer <= 0)
         {
-            timer = shotTimer;
+            timer = shootCooldown;
             ShootBullet(targetPoint.position - transform.position);
         }
 
@@ -70,7 +69,7 @@ public class Enemy : MonoBehaviour
     void MoveAtConstantSpeed(Vector3 direction, float speed)
     {
         GetComponent<Rigidbody2D>().MovePosition(transform.position + direction.normalized * speed * Time.deltaTime);
-        Debug.Log("Moving");
+        //Debug.Log("Moving");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -99,13 +98,9 @@ public class Enemy : MonoBehaviour
                             item = Instantiate(cooldownItemPrefab);
                             item.transform.position = this.transform.position;
                             break;
-
-                    }                    
+                    }
                 }
-
                 DestroySelf(despawnTime);
-
-                //Debug.Log("Enemy collided with an player projectile!");
             }
         }
     }
