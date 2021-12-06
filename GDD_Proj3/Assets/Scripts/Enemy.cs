@@ -22,8 +22,6 @@ public class Enemy : MonoBehaviour
     private float despawnTime;
     private float timer;
 
-    public AudioSource fireball;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -130,10 +128,6 @@ public class Enemy : MonoBehaviour
 
     private void ShootBullet(Vector2 direction)
     {
-
-        //play audio 
-        fireball.Play();
-
         direction = direction.normalized;
         Vector3 offset = new Vector3(direction.x, direction.y, 0) / 10f;
         GameObject bullet;
