@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
         //check if the enemy is dead
         if (health <= 0)
         {
-            if (Random.Range(0, 100) < itemDropRate)
+            /* if (Random.Range(0, 100) < itemDropRate)
             {
                 GameObject item;
                 switch (Random.Range(1, 4))
@@ -61,7 +61,9 @@ public class Enemy : MonoBehaviour
                         break;
                 }
             }
+            */
             gameObject.SetActive(false);
+            
         }
         else
         {
