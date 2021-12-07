@@ -61,25 +61,7 @@ public class GameManager : MonoBehaviour
             {
                 isPlaying = false;
 
-                //if statement for scenes
-                if(SceneManager.GetActiveScene().name == "Level 1")
-                {
-                    SceneManager.LoadScene("Level 2");
-                }
-                else if (SceneManager.GetActiveScene().name == "Level 2")
-                {
-                    SceneManager.LoadScene("Level 3");
-                }
-                else if (SceneManager.GetActiveScene().name == "Level 3")
-                {
-                    SceneManager.LoadScene("Level 4");
-                }
-                if (SceneManager.GetActiveScene().name == "Level 4")
-                {
-                    //SceneManager.LoadScene("boss");
-                    ActivateWinMenu();
-                }
-                
+                ActivateWinMenu();
             }
         }
 

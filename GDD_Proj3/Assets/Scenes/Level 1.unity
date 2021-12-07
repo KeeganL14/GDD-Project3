@@ -264,7 +264,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a5d28cfa5cf67774284a4f29bcb2a5b2, type: 3}
-  m_Color: {r: 0.41509432, g: 0.41348317, b: 0.40099677, a: 1}
+  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1147,7 +1147,6 @@ MonoBehaviour:
   projectilePrefab: {fileID: 661416971208300213, guid: bc90a3ef1540ad548846e98349145ffb,
     type: 3}
   managerObject: {fileID: 212943759}
-  startPosition: {x: 0, y: 0, z: 0}
   shootSound: {fileID: 1582972601}
   damageSound: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
@@ -1842,7 +1841,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4.55e-13, y: 1.819e-12}
-  m_SizeDelta: {x: 3841.875, y: 2160}
+  m_SizeDelta: {x: 1920.9375, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &617270329
 MonoBehaviour:
@@ -3175,7 +3174,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a5d28cfa5cf67774284a4f29bcb2a5b2, type: 3}
-  m_Color: {r: 0.41509432, g: 0.41348317, b: 0.40099677, a: 1}
+  m_Color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5055,7 +5054,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a5d28cfa5cf67774284a4f29bcb2a5b2, type: 3}
-  m_Color: {r: 0.41509432, g: 0.41348317, b: 0.40099677, a: 1}
+  m_Color: {r: 0.16037738, g: 0.1582592, b: 0.15190461, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
