@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; //scene transition 
 
 public class GameManager : MonoBehaviour
 {
@@ -59,7 +60,26 @@ public class GameManager : MonoBehaviour
             if (numberOfEnemiesLeft <= 0)
             {
                 isPlaying = false;
-                ActivateWinMenu();
+
+                //if statement for scenes
+                if(SceneManager.GetActiveScene().name == "Level 1")
+                {
+                    SceneManager.LoadScene("Level 2");
+                }
+                else if (SceneManager.GetActiveScene().name == "Level 2")
+                {
+                    SceneManager.LoadScene("Level 3");
+                }
+                else if (SceneManager.GetActiveScene().name == "Level 3")
+                {
+                    SceneManager.LoadScene("Level 4");
+                }
+                if (SceneManager.GetActiveScene().name == "Level 4")
+                {
+                    //SceneManager.LoadScene("boss");
+                    ActivateWinMenu();
+                }
+                
             }
         }
 
