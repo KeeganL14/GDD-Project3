@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
 
     public bool canShoot = false;
 
-    public float shootCooldown = 0.75f;
+    public float shootCooldown = 0.15f;
     public float chaseSpeed = 5.0f;
     public float followDistance = 6.0f;
     public float damage = 10.0f;

@@ -2225,7 +2225,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4.55e-13, y: 1.819e-12}
-  m_SizeDelta: {x: 1920.9375, y: 1080}
+  m_SizeDelta: {x: 3841.875, y: 2160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &756462692
 MonoBehaviour:
@@ -2813,6 +2813,7 @@ MonoBehaviour:
   managerObject: {fileID: 25161405}
   startPosition: {x: -7.65, y: 0, z: 0}
   shootSound: {fileID: 393592065}
+  damageSound: {fileID: 0}
 --- !u!212 &962242103
 SpriteRenderer:
   m_ObjectHideFlags: 0

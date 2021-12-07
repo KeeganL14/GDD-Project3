@@ -23,13 +23,14 @@ public class PlayerCharacter : MonoBehaviour
     float baseDamage = 20.0f;
     float baseDefense = 30.0f;
     float basePlayerSpeed = 70.0f;
-    float baseRangedCooldownSpeed = 0.45f;
+    float baseRangedCooldownSpeed = 0.30f;
 
     float[] itemEffectTimers;
 
     uint currentLevel;
 
     public AudioSource shootSound;
+    public AudioSource damageSound;
 
     // Start is called before the first frame update
     void Start()
@@ -236,6 +237,10 @@ public class PlayerCharacter : MonoBehaviour
     {
         damage -= (damage * (defense / 100));
         health -= damage;
+
+        // Needs to be fixed in unity
+        //damageSound.Play();
+
     }
 
     public float GetDamage()
