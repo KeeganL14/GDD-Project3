@@ -1261,7 +1261,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4.55e-13, y: 1.819e-12}
-  m_SizeDelta: {x: 1920.9375, y: 1080}
+  m_SizeDelta: {x: 2561.25, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &320851004
 MonoBehaviour:
@@ -3323,7 +3323,6 @@ MonoBehaviour:
   - {fileID: 1567376777}
   - {fileID: 1530708645}
   - {fileID: 1637874349}
-  - {fileID: 0}
   numberOfEnemiesLeft: 1
 --- !u!4 &1386759252
 Transform:
@@ -3973,17 +3972,17 @@ PrefabInstance:
     - target: {fileID: 1367286631252149009, guid: fd6d33dee8d3f8341bf6c99d82ef8dd1,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1367286631252149009, guid: fd6d33dee8d3f8341bf6c99d82ef8dd1,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1367286631252149009, guid: fd6d33dee8d3f8341bf6c99d82ef8dd1,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1367286631252149009, guid: fd6d33dee8d3f8341bf6c99d82ef8dd1,
         type: 3}
@@ -5479,6 +5478,7 @@ MonoBehaviour:
   managerObject: {fileID: 1386759250}
   startPosition: {x: 0, y: 3.72, z: 0}
   shootSound: {fileID: 1569741952}
+  damageSound: {fileID: 0}
 --- !u!212 &2007072307
 SpriteRenderer:
   m_ObjectHideFlags: 0

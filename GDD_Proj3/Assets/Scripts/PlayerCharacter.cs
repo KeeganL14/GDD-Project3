@@ -80,6 +80,16 @@ public class PlayerCharacter : MonoBehaviour
                 GetComponent<Animator>().SetBool("isMoving", false);
             }
 
+            //flip the player based on x input
+            if(x < 0)
+            {
+                gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            }
+            else if(x > 0)
+            {
+                gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            }
+
             //normalize the direction so the player doesn't move faster in the diagonal
             Vector2 direction = new Vector2(x, y).normalized;
             GetComponent<Rigidbody2D>().velocity = direction * speed;
