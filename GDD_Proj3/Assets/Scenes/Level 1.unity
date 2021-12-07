@@ -1147,6 +1147,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 661416971208300213, guid: bc90a3ef1540ad548846e98349145ffb,
     type: 3}
   managerObject: {fileID: 212943759}
+  startPosition: {x: 0, y: 0, z: 0}
   shootSound: {fileID: 1582972601}
   damageSound: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
@@ -1841,7 +1842,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4.55e-13, y: 1.819e-12}
-  m_SizeDelta: {x: 1920.9375, y: 1080}
+  m_SizeDelta: {x: 3841.875, y: 2160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &617270329
 MonoBehaviour:
@@ -1875,7 +1876,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f9d07a1f99a197e4fb7ece6fc123bd2a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f6df9dd849a8ec4b991912673277817, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5640,17 +5641,17 @@ PrefabInstance:
     - target: {fileID: 1367286631252149009, guid: fd6d33dee8d3f8341bf6c99d82ef8dd1,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1367286631252149009, guid: fd6d33dee8d3f8341bf6c99d82ef8dd1,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1367286631252149009, guid: fd6d33dee8d3f8341bf6c99d82ef8dd1,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1367286631252149009, guid: fd6d33dee8d3f8341bf6c99d82ef8dd1,
         type: 3}
