@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         isPlaying = true;
-
+        Time.timeScale = 1;
         winMenu.SetActive(false);
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
@@ -77,26 +78,45 @@ public class GameManager : MonoBehaviour
 
     public void ActivateWinMenu()
     {
-        winMenu.SetActive(true);
-        player.gameObject.SetActive(false);
         isPlaying = false;
         Time.timeScale = 0;
+        winMenu.SetActive(true);
+        //player.gameObject.SetActive(false);        
     }
 
     public void ActivatePauseMenu()
     {
-        pauseMenu.SetActive(true);
-        //player.gameObject.SetActive(false);
         isPlaying = false;
         Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+        //player.gameObject.SetActive(false);
     }
 
     public void ActivateGameOverMenu()
     {
-        gameOverMenu.SetActive(true);
-        player.gameObject.SetActive(false);
         isPlaying = false;
         Time.timeScale = 0;
+        gameOverMenu.SetActive(true);
+        //player.gameObject.SetActive(false);
+    }
+
+    public void NextLevelButton()
+    {
+        switch (player.GetComponent<PlayerCharacter>().currentLevel)
+        {
+            case 1:
+                SceneManager.LoadScene("Level 2");
+                break;
+            case 2:
+                SceneManager.LoadScene("Level 3");
+                break;
+            case 3:
+                SceneManager.LoadScene("Level 4");
+                break;
+            case 4:
+                SceneManager.LoadScene("Main Menu");
+                break;
+        }
     }
 
     public void ResumeGameButton()
@@ -106,18 +126,17 @@ public class GameManager : MonoBehaviour
         winMenu.SetActive(false);
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
-        player.gameObject.SetActive(true);
+        //player.gameObject.SetActive(true);
     }
 
     public void TryAgainButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level 1"); // reset scene
-        ResumeGameButton();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // reset scene
     }
 
     public void QuitToMainMenuButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void QuitGameButton()

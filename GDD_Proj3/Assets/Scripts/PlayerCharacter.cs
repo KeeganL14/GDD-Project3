@@ -6,9 +6,17 @@ public class PlayerCharacter : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public GameObject managerObject;
-    GameManager gameManager;
+
+    public AudioSource shootSound;
+    public AudioSource damageSound;
 
     public Vector3 startPosition;
+
+    public uint currentLevel;
+
+    GameManager gameManager;
+
+    Animator animationHandler;
 
     float x = 0;
     float y = 0;
@@ -18,19 +26,13 @@ public class PlayerCharacter : MonoBehaviour
     float damage;
     float rangedCooldown;
     float rangedCooldownTimer;
-
     float maxHealth = 100.0f;
     float baseDamage = 20.0f;
     float baseDefense = 30.0f;
     float basePlayerSpeed = 70.0f;
     float baseRangedCooldownSpeed = 0.30f;
 
-    float[] itemEffectTimers;
-
-    uint currentLevel;
-
-    public AudioSource shootSound;
-    public AudioSource damageSound;
+    float[] itemEffectTimers;    
 
     // Start is called before the first frame update
     void Start()
@@ -38,15 +40,27 @@ public class PlayerCharacter : MonoBehaviour
         itemEffectTimers = new float[5]; //index of the array corresponds to the int value of the enum
                                          // EX: index 2 corresponds to the timer for the modifyRangedCooldown item effect
 
+        gameManager = managerObject.GetComponent<GameManager>();
+        animationHandler = GetComponent<Animator>();
+
+        Init();
+    }
+
+    private void Init()
+    {
         health = maxHealth;
         damage = baseDamage;
         defense = baseDefense;
         speed = basePlayerSpeed;
-        rangedCooldown = baseRangedCooldownSpeed;
         rangedCooldownTimer = rangedCooldown;
+        rangedCooldown = baseRangedCooldownSpeed;
 
-        gameManager = managerObject.GetComponent<GameManager>();
         GetComponent<Transform>().position = startPosition;
+
+        for (int i = 0; i < itemEffectTimers.Length; i++)
+        {
+            itemEffectTimers[i] = 0.0f;
+        }
     }
 
     void Update()
@@ -55,8 +69,8 @@ public class PlayerCharacter : MonoBehaviour
         {
             //set the animator to show the death animation
             //this doesnt work because the character game object is being disabled somewhere in the code
-            //GetComponent<Animator>().SetBool("isDead", true);
-
+            animationHandler.SetBool("isDead", true);
+            gameManager.isPlaying = false;
             gameManager.ActivateGameOverMenu();
         }
         else if (gameManager.isPlaying == true)
@@ -72,12 +86,12 @@ public class PlayerCharacter : MonoBehaviour
             if (Mathf.Abs(x) + Mathf.Abs(y) > 0.005f)
             {
                 //set the animator to show the walking animation
-                GetComponent<Animator>().SetBool("isMoving", true);
+                animationHandler.SetBool("isMoving", true);
             }
             else
             {
                 //set the animator to show the idle animation
-                GetComponent<Animator>().SetBool("isMoving", false);
+                animationHandler.SetBool("isMoving", false);
             }
 
             //normalize the direction so the player doesn't move faster in the diagonal
@@ -114,13 +128,6 @@ public class PlayerCharacter : MonoBehaviour
                 {
                     ShootBullet(new Vector2(0, -1));
                 }
-            }
-            #endregion
-
-            #region Melee Combat
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                //TODO: Implement
             }
             #endregion
 
