@@ -81,13 +81,7 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = false;
         Time.timeScale = 0;
-
-        if (SceneManager.GetActiveScene().name == "Level 5")
-        {
-            ActivateGameWin();
-            return;
-        }
-
+        
         winMenu.SetActive(true);
     }
 
@@ -105,10 +99,7 @@ public class GameManager : MonoBehaviour
         gameOverMenu.SetActive(true);
     }
 
-    private void ActivateGameWin()
-    {
-        SceneManager.LoadScene("Main Menu");
-    }
+    
 
     public void NextLevelButton()
     {
@@ -164,7 +155,7 @@ public class GameManager : MonoBehaviour
 
     public void TryAgainButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // reset scene
+        SceneManager.LoadScene("Level 1"); // reset scene
     }
 
     public void QuitToMainMenuButton()

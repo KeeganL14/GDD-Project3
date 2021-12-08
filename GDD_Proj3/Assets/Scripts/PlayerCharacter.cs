@@ -252,7 +252,7 @@ public class PlayerCharacter : MonoBehaviour
         health -= damage;
 
         // Needs to be fixed in unity
-        //damageSound.Play();
+        damageSound.Play();
     }
 
     public float GetDamage()
