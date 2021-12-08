@@ -39,21 +39,21 @@ public class Tutorial : MonoBehaviour
 
         //initialize the master pre-tutorial array:
         officerStrings[0] = "Mr. Dresden, you finally arrived!";
-        officerStrings[1] = "We have secured the perimeter to make sure nothing escapes that warehouse!";
+        officerStrings[1] = "We have secured the perimeter to make sure nothing escapes that castle!";
         officerStrings[2] = "I am sorry that this situation involves your daughter, as well as your associate.";
         officerStrings[3] = "I'm happy to not be in your situation...";
         officerStrings[4] = "What am I even saying? I'm supposed to briefing you on the intel we have received!";
 
 
         //initialize the tutorial array:
-        tutorialStrings[0] = "We have received intel from our rooftop snipers that your associate, Mab, is holding your daughter hostage in the middle of the warehouse.";
+        tutorialStrings[0] = "We have received intel from our snipers that your associate, Mab, is holding your daughter hostage in the middle of her castle.";
         tutorialStrings[1] = "We can also confirm, that multiple life forms are guarding the rooms leading to the \"Boss Chamber\".";
         tutorialStrings[2] = "Sadly, since our bullets are ineffective against these life forms, we cannot clear the rooms.";
         tutorialStrings[3] = "Fortunately, you can!";
-        tutorialStrings[4] = "We have blasted a hole into one of the warehouse's rooms.";
+        tutorialStrings[4] = "We can air drop you into one of the castle's rooms.";
         tutorialStrings[5] = "Once you enter, you will be immediately swarmed by the guards.";
         tutorialStrings[6] = "To avoid being hit, used the WASD keys to move around the room.";
-        tutorialStrings[7] = "While moving is just one piece of the puzzle, you must be able to kill these enemies. Use the arrow keys to launch your projectiles at them.";
+        tutorialStrings[7] = "While moving is just one piece of the puzzle, you must be able to kill these enemies. Use the Arrow Keys to launch your projectiles at them.";
         tutorialStrings[8] = "Although we cannot assist with manpower, we can help you out by launching potions into the rooms.";
         tutorialStrings[9] = "These potions will give you bonus effects for a certain period of time. Be wary of the time, though.";
         tutorialStrings[10] = "Finally, once the room has been cleared of all enemies, you will proceed into the next room, and do everything all over again.";
