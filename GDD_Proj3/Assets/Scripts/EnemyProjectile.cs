@@ -5,19 +5,19 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     public Vector2 direction;
+
     public float speed = 7.5f;
     public float projectileLifetime = 2.25f;
     public float damage;
 
     public ParticleSystem explosion;
+
     AudioSource projectileSound;
 
     // Start is called before the first frame update
     void Start()
     {
         Destroy(gameObject, projectileLifetime);
-
-        //instantiate the particle system at the bullet's location before its destroyed
     }
 
     // Update is called once per frame

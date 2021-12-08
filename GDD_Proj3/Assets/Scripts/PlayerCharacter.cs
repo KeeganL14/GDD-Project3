@@ -32,7 +32,7 @@ public class PlayerCharacter : MonoBehaviour
     float basePlayerSpeed = 70.0f;
     float baseRangedCooldownSpeed = 0.30f;
 
-    float[] itemEffectTimers;    
+    float[] itemEffectTimers;
 
     // Start is called before the first frame update
     void Start()
@@ -67,15 +67,13 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (health < 0.0f)
         {
-            //set the animator to show the death animation
-            //this doesnt work because the character game object is being disabled somewhere in the code
             animationHandler.SetBool("isDead", true);
             gameManager.isPlaying = false;
-            gameManager.ActivateGameOverMenu();
+            gameManager.ActvateGameOverMenu();
         }
         else if (gameManager.isPlaying == true)
         {
-            #region Movement
+            //#region Movement
             if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) &&
                 !Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
             {
@@ -84,22 +82,20 @@ public class PlayerCharacter : MonoBehaviour
             }
 
             if (Mathf.Abs(x) + Mathf.Abs(y) > 0.005f)
-            {
-                //set the animator to show the walking animation
+            {   //set the animator to show the walking animation
                 animationHandler.SetBool("isMoving", true);
             }
             else
-            {
-                //set the animator to show the idle animation
+            {   //set the animator to show the idle animation
                 animationHandler.SetBool("isMoving", false);
             }
 
             //flip the player based on x input
-            if(x < 0)
+            if (x < 0)
             {
                 gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
             }
-            else if(x > 0)
+            else if (x > 0)
             {
                 gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             }
@@ -107,9 +103,9 @@ public class PlayerCharacter : MonoBehaviour
             //normalize the direction so the player doesn't move faster in the diagonal
             Vector2 direction = new Vector2(x, y).normalized;
             GetComponent<Rigidbody2D>().velocity = direction * speed;
-            #endregion
+            //#endregion
 
-            #region Ranged Combat
+            //#region Ranged Combat
             if (rangedCooldownTimer > 0)
             {
                 rangedCooldownTimer -= Time.deltaTime;
@@ -139,9 +135,9 @@ public class PlayerCharacter : MonoBehaviour
                     ShootBullet(new Vector2(0, -1));
                 }
             }
-            #endregion
+            //#endregion
 
-            #region Item Effects
+            //#region Item Effects
             for (int i = 1; i < itemEffectTimers.Length; i++)
             {
                 if (itemEffectTimers[i] > 0.0f)
@@ -167,7 +163,7 @@ public class PlayerCharacter : MonoBehaviour
                     }
                 }
             }
-            #endregion
+            //#endregion
         }
     }
 
@@ -257,7 +253,6 @@ public class PlayerCharacter : MonoBehaviour
 
         // Needs to be fixed in unity
         //damageSound.Play();
-
     }
 
     public float GetDamage()

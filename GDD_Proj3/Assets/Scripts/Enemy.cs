@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     public GameObject speedItemPrefab;
     public GameObject cooldownItemPrefab;
 
+    public AudioSource fireball;
+
     public bool canShoot = false;
 
     public float shootCooldown = 0.15f;
@@ -17,14 +19,12 @@ public class Enemy : MonoBehaviour
     public float damage = 10.0f;
     public float health = 30.0f;
     public float defense = 5.0f;
-    public float itemDropRate = 5.0f; // 15%
+    public float itemDropRate = 5.0f; // 5%
 
     public Transform targetPoint;
 
     private float despawnTime;
     private float timer;
-
-    public AudioSource fireball;
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +36,8 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         timer -= Time.deltaTime;
 
-        //check if the enemy is dead
         if (health <= 0)
         {
             /* if (Random.Range(0, 100) < itemDropRate)
@@ -63,7 +61,6 @@ public class Enemy : MonoBehaviour
             }
             */
             gameObject.SetActive(false);
-            
         }
         else
         {
@@ -103,7 +100,6 @@ public class Enemy : MonoBehaviour
     void MoveAtConstantSpeed(Vector3 direction, float speed)
     {
         GetComponent<Rigidbody2D>().MovePosition(transform.position + direction.normalized * speed * Time.deltaTime);
-        //Debug.Log("Moving");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -143,7 +139,5 @@ public class Enemy : MonoBehaviour
         bullet = Instantiate(projectilePrefab);
         bullet.transform.position = transform.position + offset;
         bullet.GetComponent<EnemyProjectile>().direction = direction;
-
     }
-
 }

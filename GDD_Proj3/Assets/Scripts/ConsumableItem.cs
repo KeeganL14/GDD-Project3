@@ -19,16 +19,13 @@ public class ConsumableItem : MonoBehaviour
 
     private void Start()
     {
-        
-        if(itemPickupSound == null)
+        if (itemPickupSound == null)
         {
             Debug.Log("The AudioSource is NULL!");
         }
     }
 
-    private void Update()
-    {        
-    }
+    private void Update() { }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -36,7 +33,6 @@ public class ConsumableItem : MonoBehaviour
         {
             //play sound 
             itemPickupSound.Play();
-
             //Debug.Log("Item collided with an player");
             Destroy(gameObject, 0.05f);
         }

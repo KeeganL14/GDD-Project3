@@ -81,8 +81,14 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = false;
         Time.timeScale = 0;
+
+        if (SceneManager.GetActiveScene().name == "Level 5")
+        {
+            ActivateGameWin();
+            return;
+        }
+
         winMenu.SetActive(true);
-        //player.gameObject.SetActive(false);        
     }
 
     public void ActivatePauseMenu()
@@ -90,19 +96,42 @@ public class GameManager : MonoBehaviour
         isPlaying = false;
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
-        //player.gameObject.SetActive(false);
     }
 
-    public void ActivateGameOverMenu()
+    public void ActvateGameOverMenu()
     {
         isPlaying = false;
         Time.timeScale = 0;
         gameOverMenu.SetActive(true);
-        //player.gameObject.SetActive(false);
+    }
+
+    private void ActivateGameWin()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void NextLevelButton()
     {
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Level 1":
+                SceneManager.LoadScene("Level 2");
+                break;
+            case "Level 2":
+                SceneManager.LoadScene("Level 3");
+                break;
+            case "Level 3":
+                SceneManager.LoadScene("Level 4");
+                break;
+            case "Level 4":
+                SceneManager.LoadScene("Level 5");
+                break;
+            case "Level 5":
+                SceneManager.LoadScene("Main Menu");
+                break;
+        }
+
+        /*
         switch (player.GetComponent<PlayerCharacter>().currentLevel)
         {
             case 1:
@@ -115,9 +144,13 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene("Level 4");
                 break;
             case 4:
+                SceneManager.LoadScene("Level 5");
+                break;
+            case 5:
                 SceneManager.LoadScene("Main Menu");
                 break;
         }
+        */
     }
 
     public void ResumeGameButton()
@@ -127,7 +160,6 @@ public class GameManager : MonoBehaviour
         winMenu.SetActive(false);
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
-        //player.gameObject.SetActive(true);
     }
 
     public void TryAgainButton()
